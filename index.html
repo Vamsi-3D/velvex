@@ -1,0 +1,1606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VELVEX — Live Vibrant. Bold. Smart.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --gold: #C6A15B;
+  --gold-light: #E6D2A2;
+  --gold-dark: #9a7a3e;
+  --maroon: #7A2238;
+  --maroon-light: #9B3350;
+  --maroon-mid: #B85070;
+  --blush: #C4748A;
+  --rose: #D9A0AD;
+  --cream: #F8F0EC;
+  --warm-white: #FDF8F5;
+  --text-dark: #2A1018;
+  --text-mid: #3D0F1E;
+}
+/* ── GLOBAL VELVET TEXTURE ── */
+/* Applied as a fixed overlay so it covers the entire site */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 1;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 2px,
+      rgba(255,255,255,0.014) 2px, rgba(255,255,255,0.014) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 2px,
+      rgba(255,255,255,0.009) 2px, rgba(255,255,255,0.009) 3px
+    ),
+    repeating-linear-gradient(
+      45deg,
+      rgba(198,161,91,0.022) 0, rgba(198,161,91,0.022) 1px,
+      transparent 0, transparent 10px
+    ),
+    repeating-linear-gradient(
+      -45deg,
+      rgba(198,161,91,0.012) 0, rgba(198,161,91,0.012) 1px,
+      transparent 0, transparent 10px
+    );
+  mix-blend-mode: overlay;
+}
+
+/* Velvet sheen on hero — richer nap effect */
+#hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background-image:
+    repeating-linear-gradient(
+      160deg,
+      rgba(255,255,255,0.0) 0px, rgba(255,255,255,0.0) 6px,
+      rgba(255,255,255,0.018) 6px, rgba(255,255,255,0.018) 7px
+    ),
+    repeating-linear-gradient(
+      70deg,
+      rgba(198,161,91,0.03) 0px, rgba(198,161,91,0.03) 1px,
+      transparent 0, transparent 8px
+    );
+  mix-blend-mode: overlay;
+}
+
+/* Velvet nap on product cards */
+.pcard-img-side::after,
+.pcard-content::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  background-image:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255,255,255,0.0) 0px, rgba(255,255,255,0.0) 4px,
+      rgba(255,255,255,0.016) 4px, rgba(255,255,255,0.016) 5px
+    );
+  mix-blend-mode: overlay;
+  border-radius: inherit;
+}
+
+/* Velvet on contact section */
+#contact::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      0deg,
+      transparent 0px, transparent 2px,
+      rgba(255,255,255,0.012) 2px, rgba(255,255,255,0.012) 3px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0px, transparent 2px,
+      rgba(255,255,255,0.007) 2px, rgba(255,255,255,0.007) 3px
+    );
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: "Montserrat", sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; cursor: none; }
+
+/* CURSOR */
+#cursor { position: fixed; top: 0; left: 0; width: 10px; height: 10px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 99999; transform: translate(-50%,-50%); transition: transform 0.15s ease, background 0.3s; mix-blend-mode: multiply; }
+#cursor-ring { position: fixed; top: 0; left: 0; width: 38px; height: 38px; border: 1.5px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 99998; transform: translate(-50%,-50%); transition: width 0.3s ease, height 0.3s ease, opacity 0.3s; opacity: 0.55; }
+.cursor-hover #cursor { transform: translate(-50%,-50%) scale(2.8); background: var(--maroon); }
+.cursor-hover #cursor-ring { width: 64px; height: 64px; opacity: 0.25; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 28px 60px; display: flex; align-items: center; justify-content: center; transition: background 0.5s, padding 0.4s, box-shadow 0.5s; }
+nav.scrolled { background: rgba(90,18,32,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); padding: 14px 60px; box-shadow: 0 4px 40px rgba(90,18,32,0.4); border-radius: 0 0 16px 16px; }
+.nav-inner { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 1200px; }
+.nav-links { display: flex; gap: 44px; }
+.nav-links a { font-family: "Montserrat",sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 3.5px; text-transform: uppercase; color: rgba(255,255,255,0.95); text-decoration: none; position: relative; padding-bottom: 4px; transition: color 0.3s; }
+.nav-links a::after { content: ""; position: absolute; bottom: 0; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.4s ease; }
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { width: 100%; }
+.nav-logo { height: 50px; width: auto; filter: drop-shadow(0 2px 14px rgba(198,161,91,0.5)); transition: transform 0.3s, filter 0.3s; }
+.nav-logo:hover { transform: scale(1.06); filter: drop-shadow(0 4px 24px rgba(198,161,91,0.8)); }
+
+/* HERO */
+#hero { position: relative; width: 100vw; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+#hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(90,18,32,0.5) 0%, rgba(30,5,12,0.32) 50%, rgba(90,18,32,0.6) 100%); z-index: 1; }
+.hero-content { position: relative; z-index: 2; text-align: center; opacity: 0; animation: heroFadeIn 2s ease 0.9s forwards; }
+@keyframes heroFadeIn { from { opacity:0; transform:translateY(32px); } to { opacity:1; transform:translateY(0); } }
+.hero-logo { height: 115px; width: auto; margin-bottom: 24px; filter: drop-shadow(0 4px 32px rgba(198,161,91,0.65)); animation: heroFloat 7s ease-in-out infinite; }
+@keyframes heroFloat { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-10px);} }
+.hero-tagline { font-family: "Cormorant Garamond",serif; font-size: clamp(13px,1.8vw,17px); font-weight: 400; letter-spacing: 7px; text-transform: uppercase; color: var(--gold-light); margin-bottom: 22px; }
+.hero-headline { font-family: "Cormorant Garamond",serif; font-size: clamp(50px,7vw,92px); font-weight: 400; color: white; line-height: 1.05; margin-bottom: 38px; text-shadow: 0 4px 30px rgba(0,0,0,0.25); }
+.hero-headline em { font-style: italic; color: var(--gold-light); }
+.hero-pills { display: flex; gap: 0; justify-content: center; margin-bottom: 52px; }
+.hero-pill { font-size: 9px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold-light); font-family: "Montserrat",sans-serif; font-weight: 500; padding: 0 18px; border-right: 1px solid rgba(198,161,91,0.4); }
+.hero-pill:last-child { border-right: none; }
+.hero-cta { display: inline-flex; align-items: center; gap: 14px; font-family: "Montserrat",sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; text-decoration: none; color: var(--text-dark); background: linear-gradient(135deg, var(--gold-light), var(--gold)); padding: 18px 52px; position: relative; overflow: hidden; transition: transform 0.4s, box-shadow 0.4s; clip-path: polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%); border-radius: 4px; }
+.hero-cta::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); opacity: 0; transition: opacity 0.4s; }
+.hero-cta:hover::before { opacity: 1; }
+.hero-cta:hover { transform: translateY(-4px); box-shadow: 0 16px 48px rgba(198,161,91,0.55); }
+.hero-cta span { position: relative; z-index: 1; }
+.hero-scroll-hint { position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 10px; color: rgba(255,255,255,0.55); font-size: 8px; letter-spacing: 5px; text-transform: uppercase; font-family: "Montserrat",sans-serif; animation: heroFadeIn 2s ease 2.2s both; }
+.scroll-line { width: 1px; height: 52px; background: linear-gradient(to bottom, var(--gold), transparent); animation: scrollPulse 2.2s ease-in-out infinite; }
+@keyframes scrollPulse { 0%,100%{ opacity:0.3; transform:scaleY(1); } 50%{ opacity:1; transform:scaleY(1.15); } }
+
+/* ABOUT */
+#about { position: relative; height: 300vh; }
+.about-sticky { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.about-bg { position: absolute; inset: 0; transition: background 1.1s ease; }
+.about-bg.p0 { background: linear-gradient(135deg, #1C0812 0%, #240A16 100%); }
+.about-bg.p1 { background: linear-gradient(135deg, #160610 0%, #1C0812 100%); }
+.about-bg.p2 { background: linear-gradient(135deg, #110408 0%, #180610 100%); }
+/* Velvet texture overlay — fine woven microfibre feel */
+.about-texture {
+  position: absolute; inset: 0; pointer-events: none;
+  opacity: 1;
+  background-image:
+    repeating-linear-gradient(0deg,   transparent 0px, transparent 3px, rgba(255,255,255,0.012) 3px, rgba(255,255,255,0.012) 4px),
+    repeating-linear-gradient(90deg,  transparent 0px, transparent 3px, rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px),
+    repeating-linear-gradient(45deg,  rgba(198,161,91,0.025) 0, rgba(198,161,91,0.025) 1px, transparent 0, transparent 14px),
+    repeating-linear-gradient(-45deg, rgba(198,161,91,0.015) 0, rgba(198,161,91,0.015) 1px, transparent 0, transparent 14px);
+}
+.about-vline { position: absolute; left: 50%; top: 10%; bottom: 10%; width: 1px; background: linear-gradient(to bottom, transparent, rgba(198,161,91,0.4), transparent); }
+.about-phase { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.9s ease; pointer-events: none; padding: 60px; }
+.about-phase.active { opacity: 1; pointer-events: auto; }
+.about-eyebrow { font-family: "Montserrat",sans-serif; font-size: 9px; letter-spacing: 7px; text-transform: uppercase; color: var(--gold); margin-bottom: 22px; display: block; }
+.about-headline { font-family: "Cormorant Garamond",serif; font-size: clamp(40px,5.5vw,70px); font-weight: 400; line-height: 1.1; margin-bottom: 28px; }
+.about-body { font-family: "Montserrat",sans-serif; font-size: 17px; line-height: 1.95; font-weight: 400; max-width: 580px; margin: 0 auto 36px; letter-spacing: 0.1px; }
+.about-tags { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.about-tag { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; border: 1px solid currentColor; padding: 8px 20px; font-family: "Montserrat",sans-serif; font-weight: 500; transition: all 0.3s; border-radius: 6px; }
+.about-tag:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+.phase-dots { position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%); display: flex; gap: 10px; z-index: 3; }
+.pdot { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--gold); transition: all 0.4s; }
+.pdot.active { background: var(--gold); transform: scale(1.4); }
+
+/* DIVIDER */
+.sec-div { display: flex; align-items: center; justify-content: center; padding: 50px 0 30px; gap: 18px; }
+.dline { height: 1px; width: 100px; background: linear-gradient(to right, transparent, var(--gold)); }
+.dline.r { background: linear-gradient(to left, transparent, var(--gold)); }
+.ddiam { width: 7px; height: 7px; background: var(--gold); transform: rotate(45deg); }
+
+/* PRODUCTS — CINEMATIC CAROUSEL */
+#products { background: #150510; padding: 0 0 100px; }
+.prod-header { text-align: center; padding: 90px 60px 50px; }
+.sec-label { display: block; font-family: "Montserrat",sans-serif; font-size: 9px; letter-spacing: 6px; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+.sec-title { font-family: "Cormorant Garamond",serif; font-size: clamp(38px,5vw,66px); font-weight: 400; line-height: 1.1; color: #fff; }
+.sec-title em { font-style: italic; color: var(--gold); }
+.sec-sub { font-family: "Montserrat",sans-serif; font-size: 16px; line-height: 1.85; font-weight: 400; color: rgba(255,255,255,0.55); max-width: 580px; margin: 22px auto 0; }
+
+/* TABS */
+.ptabs { display: flex; justify-content: center; margin-bottom: 0; border-bottom: 1px solid rgba(198,161,91,0.15); padding: 0 60px; }
+.ptab { font-family: "Montserrat",sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; font-weight: 600; padding: 16px 44px; border: none; background: none; cursor: none; color: rgba(255,255,255,0.4); position: relative; transition: color 0.3s; }
+.ptab::after { content: ""; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: var(--gold); transform: scaleX(0); transition: transform 0.4s ease; }
+.ptab.on { color: var(--gold); }
+.ptab.on::after { transform: scaleX(1); }
+.ptab:hover { color: rgba(198,161,91,0.8); }
+.tcontent { display: none; }
+.tcontent.on { display: block; }
+
+/* CAROUSEL WRAPPER */
+.carousel-section { padding: 70px 0 30px; position: relative; }
+.carousel-intro { text-align: center; padding: 0 60px 60px; }
+.carousel-label { font-family: "Cormorant Garamond",serif; font-size: clamp(15px,1.8vw,20px); letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; display: block; font-style: italic; }
+.carousel-sub { font-family: "Montserrat",sans-serif; font-size: 15px; line-height: 1.85; font-weight: 400; color: rgba(255,255,255,0.5); max-width: 520px; margin: 0 auto; }
+
+/* SNAP TRACK */
+.snap-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; gap: 0; padding: 0 calc(50vw - 480px); scroll-padding-left: calc(50vw - 480px); }
+.snap-track::-webkit-scrollbar { display: none; }
+
+/* PRODUCT CARD */
+.pcard { scroll-snap-align: start; flex: 0 0 960px; width: 960px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 520px; border-radius: 20px; overflow: hidden; margin-right: 24px; position: relative; background: #1E0A14; border: 1px solid rgba(198,161,91,0.1); transition: border-color 0.4s; }
+.pcard:hover { border-color: rgba(198,161,91,0.3); }
+
+/* IMAGE SIDE */
+.pcard-img-side { position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; padding: 50px; background: linear-gradient(135deg, #250C18 0%, #150510 100%); min-height: 520px; }
+.pcard-img { max-height: 340px; max-width: 260px; object-fit: contain; position: relative; z-index: 2; transition: transform 0.6s cubic-bezier(.23,1,.32,1), filter 0.5s; filter: drop-shadow(0 16px 48px rgba(0,0,0,0.6)); }
+.pcard:hover .pcard-img { transform: scale(1.1) translateY(-12px); filter: drop-shadow(0 32px 60px rgba(0,0,0,0.8)); }
+
+/* CONTENT SIDE */
+.pcard-content { padding: 60px 52px; display: flex; flex-direction: column; justify-content: center; background: #1A0810; position: relative; overflow: hidden; }
+.pcard-content::before { content: ""; position: absolute; top: -60px; right: -60px; width: 220px; height: 220px; background: radial-gradient(circle, rgba(198,161,91,0.07) 0%, transparent 70%); pointer-events: none; }
+.pcard-num { font-family: "Montserrat",sans-serif; font-size: 9px; letter-spacing: 5px; color: rgba(230,190,100,0.92); text-transform: uppercase; margin-bottom: 20px; display: block; font-weight: 600; }
+.pcard-name { font-family: "Cormorant Garamond",serif; font-size: clamp(28px,3.5vw,44px); font-weight: 400; color: #fff; line-height: 1.1; margin-bottom: 18px; }
+.pcard-desc { font-family: "Montserrat",sans-serif; font-size: 15px; line-height: 1.9; font-weight: 400; color: rgba(255,255,255,0.6); margin-bottom: 28px; }
+.pcard-tag { display: inline-block; font-size: 8px; letter-spacing: 4px; text-transform: uppercase; border: 1px solid rgba(198,161,91,0.4); color: var(--gold); padding: 8px 20px; font-family: "Montserrat",sans-serif; border-radius: 30px; transition: all 0.4s; }
+.pcard:hover .pcard-tag { background: var(--gold); color: #0E0308; border-color: var(--gold); }
+
+/* CAROUSEL NAVIGATION */
+.carousel-nav { display: flex; align-items: center; justify-content: center; gap: 24px; padding: 36px 0 10px; }
+.cnav-btn { width: 48px; height: 48px; border-radius: 50%; border: 1px solid rgba(198,161,91,0.3); background: transparent; cursor: none; color: var(--gold); font-size: 18px; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+.cnav-btn:hover { background: var(--gold); color: #0E0308; border-color: var(--gold); }
+.cnav-dots { display: flex; gap: 10px; }
+.cnav-dot { width: 6px; height: 6px; border-radius: 50%; border: 1px solid rgba(198,161,91,0.4); background: transparent; transition: all 0.4s; cursor: none; padding: 0; }
+.cnav-dot.active { background: var(--gold); border-color: var(--gold); width: 24px; border-radius: 3px; }
+
+/* ── ANIMATION CANVAS — always on ── */
+.anim-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; opacity: 1; border-radius: inherit; }
+
+/* Zero Thin — icons float from bottom, fade at mid */
+@keyframes ztFloat {
+  0%   { transform: translateY(0px) scale(var(--zt-scale)); opacity: 0; }
+  12%  { opacity: var(--zt-op); }
+  55%  { opacity: var(--zt-op); }
+  100% { transform: translateY(var(--zt-rise)) scale(var(--zt-scale)); opacity: 0; }
+}
+.zt-icon {
+  position: absolute;
+  bottom: 0;
+  left: var(--zt-x);
+  width: var(--zt-size);
+  height: var(--zt-size);
+  opacity: 0;
+  animation: ztFloat var(--zt-dur) ease-out var(--zt-delay) infinite;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 8px rgba(198,161,91,0.55));
+}
+
+/* Extra Time — sparks */
+@keyframes sparkFly { 0% { transform:translate(0,0) scale(1); opacity:1; } 100% { transform:translate(var(--tx),var(--ty)) scale(0); opacity:0; } }
+.spark { position: absolute; width: 3px; height: 12px; background: linear-gradient(to bottom, #FFE580, var(--gold)); border-radius: 2px; animation: sparkFly 0.9s ease-out infinite; transform-origin: bottom center; }
+
+/* Classic — fingerprint heartbeat */
+@keyframes fpBeat {
+  0%   { transform: translate(-50%,-50%) scale(0.15) rotate(var(--fp-rot)); opacity: 0; }
+  12%  { opacity: var(--fp-op); }
+  38%  { transform: translate(-50%,-50%) scale(var(--fp-scale)) rotate(var(--fp-rot)); opacity: var(--fp-op); }
+  52%  { transform: translate(-50%,-50%) scale(calc(var(--fp-scale)*1.12)) rotate(var(--fp-rot)); opacity: calc(var(--fp-op)*0.9); }
+  65%  { transform: translate(-50%,-50%) scale(var(--fp-scale)) rotate(var(--fp-rot)); opacity: var(--fp-op); }
+  78%  { transform: translate(-50%,-50%) scale(calc(var(--fp-scale)*1.08)) rotate(var(--fp-rot)); opacity: calc(var(--fp-op)*0.7); }
+  100% { transform: translate(-50%,-50%) scale(calc(var(--fp-scale)*1.3)) rotate(var(--fp-rot)); opacity: 0; }
+}
+.fp-heart {
+  position: absolute;
+  left: var(--fp-x);
+  top: var(--fp-y);
+  width: var(--fp-size);
+  height: var(--fp-size);
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 10px rgba(176,58,100,0.7)) brightness(1.1);
+  animation: fpBeat var(--fp-dur) cubic-bezier(0.22,1,0.36,1) var(--fp-delay) infinite;
+}
+.heart-stamp { display: none; }
+
+/* Assorted Flavours — no animation */
+
+/* Hair swatch photo — circle crop */
+.swatch-photo { width:100%; height:100%; object-fit:cover; border-radius:50%; display:block; }
+
+/* Hair ink-drop canvas */
+.hair-ink-canvas { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; border-radius:inherit; }
+
+/* Super Studded — stud image appear with rotation + zoom */
+@keyframes studAppear {
+  0%   { opacity: 0; transform: translate(-50%,-50%) rotate(var(--stud-rot-start)) scale(0.2); }
+  25%  { opacity: 1; }
+  70%  { opacity: 1; transform: translate(-50%,-50%) rotate(var(--stud-rot-end)) scale(var(--stud-scale)); }
+  100% { opacity: 0; transform: translate(-50%,-50%) rotate(calc(var(--stud-rot-end) + 40deg)) scale(calc(var(--stud-scale) * 1.1)); }
+}
+.stud-gem {
+  position: absolute;
+  left: var(--stud-x);
+  top: var(--stud-y);
+  width: var(--stud-size);
+  height: var(--stud-size);
+  object-fit: contain;
+  opacity: 0;
+  mix-blend-mode: screen;
+  filter: drop-shadow(0 0 5px rgba(198,161,91,0.3)) brightness(1.05);
+  animation: studAppear var(--stud-dur) cubic-bezier(0.22,1,0.36,1) var(--stud-delay) infinite;
+  pointer-events: none;
+}
+
+/* CONDOM VARIETY SELECTOR */
+.variety-selector { display: flex; justify-content: center; align-items: center; gap: 22px; padding: 32px 60px 40px; flex-wrap: wrap; }
+.variety-btn { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: none; background: none; border: none; padding: 0; transition: transform 0.3s; }
+.variety-btn:hover { transform: translateY(-4px); }
+.variety-circle { width: 80px; height: 80px; border-radius: 50%; border: 2px solid rgba(198,161,91,0.25); overflow: hidden; display: flex; align-items: center; justify-content: center; background: #1E0A14; transition: border-color 0.4s, box-shadow 0.4s; position: relative; }
+.variety-circle img { width: 68px; height: 68px; object-fit: contain; transition: transform 0.4s; }
+.variety-btn.active .variety-circle { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(198,161,91,0.2), 0 8px 28px rgba(198,161,91,0.3); }
+.variety-btn.active .variety-circle img { transform: scale(1.08); }
+.variety-btn:hover .variety-circle { border-color: rgba(198,161,91,0.6); }
+.variety-label { font-family: "Montserrat",sans-serif; font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 500; text-align: center; transition: color 0.3s; max-width: 80px; }
+.variety-btn.active .variety-label { color: var(--gold); }
+@keyframes inkSpread { 0% { transform:translate(-50%,-50%) scale(0); opacity:0.85; } 100% { transform:translate(-50%,-50%) scale(5); opacity:0; } }
+.ink-drop { position: absolute; top: 50%; left: 50%; width: 80px; height: 80px; border-radius: 50%; animation: inkSpread 1.6s ease-out infinite; }
+.ink-drop:nth-child(2) { animation-delay: 0.5s; width: 60px; height: 60px; opacity: 0.6; }
+.ink-drop:nth-child(3) { animation-delay: 1s; width: 40px; height: 40px; opacity: 0.4; }
+
+/* HAIR COLOUR VARIETY SELECTOR */
+.hair-variety-selector { display: flex; justify-content: center; align-items: center; gap: 18px; padding: 32px 60px 40px; flex-wrap: wrap; }
+.hair-variety-btn { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: none; background: none; border: none; padding: 0; transition: transform 0.3s; }
+.hair-variety-btn:hover { transform: translateY(-4px); }
+.hair-swatch-circle { width: 72px; height: 72px; border-radius: 50%; border: 2px solid rgba(198,161,91,0.25); overflow: hidden; display: flex; align-items: center; justify-content: center; transition: border-color 0.4s, box-shadow 0.4s; position: relative; }
+.hair-swatch-circle .swatch-fill { width: 100%; height: 100%; border-radius: 50%; transition: transform 0.4s; }
+.hair-variety-btn.active .hair-swatch-circle { border-color: var(--gold); box-shadow: 0 0 0 3px rgba(198,161,91,0.2), 0 8px 28px rgba(198,161,91,0.3); }
+.hair-variety-btn.active .hair-swatch-circle .swatch-fill { transform: scale(1.08); }
+.hair-variety-btn:hover .hair-swatch-circle { border-color: rgba(198,161,91,0.6); }
+.hair-variety-label { font-family: "Montserrat",sans-serif; font-size: 8px; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 500; text-align: center; transition: color 0.3s; max-width: 72px; line-height: 1.4; }
+.hair-variety-btn.active .hair-variety-label { color: var(--gold); }
+
+/* HAIR BADGES */
+.hbadges { display: flex; gap: 20px; justify-content: center; margin-top: 56px; flex-wrap: wrap; padding: 0 40px; }
+.hbadge { display: flex; align-items: center; gap: 10px; font-family: "Montserrat",sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.7); font-weight: 500; }
+.hbadge-icon { width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg, var(--gold-light), var(--gold)); display: flex; align-items: center; justify-content: center; font-size: 15px; }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .snap-track { padding: 0 20px; scroll-padding-left: 20px; }
+  .pcard { flex: 0 0 calc(100vw - 40px); width: calc(100vw - 40px); grid-template-columns: 1fr; min-height: auto; }
+  .pcard-img-side { min-height: 300px; padding: 40px; }
+  .pcard-img { max-height: 220px; }
+  .pcard-content { padding: 36px 32px 44px; }
+}
+
+/* CONTACT */
+#contact { background: linear-gradient(135deg, #0C0208 0%, #100308 100%); padding: 110px 60px; position: relative; overflow: hidden; }
+#contact::before { content: ""; position: absolute; inset: 0; background-image: repeating-linear-gradient(-45deg, rgba(198,161,91,0.04) 0, rgba(198,161,91,0.04) 1px, transparent 0, transparent 50%); background-size: 28px 28px; }
+.cont-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; position: relative; z-index: 1; }
+.cont-title { font-family: "Cormorant Garamond",serif; font-size: clamp(42px,5vw,70px); font-weight: 400; color: white; line-height: 1.1; margin-bottom: 22px; }
+.cont-sub { font-family: "Montserrat",sans-serif; font-size: 16px; line-height: 1.85; font-weight: 400; color: rgba(255,255,255,0.78); margin-bottom: 36px; }
+.cont-logo { height: 76px; width: auto; filter: drop-shadow(0 4px 20px rgba(198,161,91,0.5)); }
+.cont-details { display: flex; flex-direction: column; gap: 26px; }
+.cont-item { display: flex; align-items: flex-start; gap: 16px; padding: 16px; padding-bottom: 26px; border-bottom: 1px solid rgba(198,161,91,0.12); border-radius: 10px; }
+.cont-item:last-child { border-bottom: none; }
+.cont-icon { width: 42px; height: 42px; flex-shrink: 0; border: 1px solid rgba(198,161,91,0.35); display: flex; align-items: center; justify-content: center; font-size: 17px; transition: all 0.3s; border-radius: 8px; }
+.cont-item:hover .cont-icon { background: var(--gold); border-color: var(--gold); }
+.cont-lbl { font-family: "Montserrat",sans-serif; font-size: 8px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 5px; display: block; }
+.cont-val { font-family: "Montserrat",sans-serif; font-size: 15px; font-weight: 400; color: rgba(255,255,255,0.9); }
+.socials { display: flex; gap: 10px; margin-top: 6px; }
+.sbtn { width: 42px; height: 42px; border: 1px solid rgba(198,161,91,0.35); display: flex; align-items: center; justify-content: center; text-decoration: none; color: var(--gold); font-size: 14px; font-family: "Montserrat",sans-serif; font-weight: 700; transition: all 0.3s; border-radius: 8px; }
+.sbtn:hover { background: var(--gold); color: var(--maroon); transform: translateY(-4px); box-shadow: 0 10px 28px rgba(198,161,91,0.35); }
+
+/* FOOTER */
+footer { background: #080106; padding: 30px 60px; display: flex; align-items: center; justify-content: space-between; }
+.fcopy { font-family: "Montserrat",sans-serif; font-size: 9px; letter-spacing: 2px; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+.ftag { font-family: "Cormorant Garamond",serif; font-size: 15px; font-style: italic; color: var(--gold); opacity: 0.65; }
+
+/* ── EXTRA TIME — HOURGLASS CANVAS ── */
+#hourglass-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+/* ── ASSORTED FLAVOURS — FRUIT CANVAS ── */
+#fruit-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* REVEAL */
+.rv { opacity: 0; transform: translateY(44px); transition: opacity 0.9s cubic-bezier(.23,1,.32,1), transform 0.9s cubic-bezier(.23,1,.32,1); }
+.rv.in { opacity: 1; transform: translateY(0); }
+.d1 { transition-delay: 0.1s; } .d2 { transition-delay: 0.2s; } .d3 { transition-delay: 0.3s; } .d4 { transition-delay: 0.4s; } .d5 { transition-delay: 0.5s; }
+</style>
+</head>
+<body>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <div class="nav-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About Us</a>
+    </div>
+    <img src="images/image_001.png" alt="VELVEX" class="nav-logo">
+    <div class="nav-links">
+      <a href="#products">Products</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <video id="hero-video" autoplay muted loop playsinline>
+    <source src="videos/video_001.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <img src="images/image_002.png" alt="VELVEX" class="hero-logo">
+    <p class="hero-tagline">Live Vibrant &middot; Bold &middot; Smart</p>
+    <h1 class="hero-headline">Designed for<br><em>Confidence.</em></h1>
+    <div class="hero-pills">
+      <span class="hero-pill">Luxury</span>
+      <span class="hero-pill">Intimacy</span>
+      <span class="hero-pill">Confidence</span>
+    </div>
+    <a href="#products" class="hero-cta"><span>Explore Collection &rarr;</span></a>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-sticky">
+    <div class="about-bg p0" id="abg"></div>
+    <div class="about-texture"></div>
+    <div class="about-vline"></div>
+    <div class="about-phase active" id="ap0">
+      <div style="text-align:center;max-width:800px">
+        <span class="about-eyebrow">Who We Are</span>
+        <h2 class="about-headline" style="color:#fff">We are<br><em style="color:var(--gold-light);font-style:italic">VELVEX.</em></h2>
+        <p class="about-body" style="color:rgba(255,255,255,0.82)">A modern brand dedicated to personal care, hygiene and wellness &mdash; dedicated to the two essentials of a confident life: <strong>Vibrant Hair Color</strong> and <strong>Premium Sexual Wellness</strong>. Our name embodies our promise: a velvety smooth experience — whether it's the rich texture of your hair or the seamless protection you trust. Bold. Sophisticated. Premium.</p>
+        <div class="about-tags">
+          <span class="about-tag" style="color:var(--gold-light);border-color:rgba(198,161,91,0.5)">Bold</span>
+          <span class="about-tag" style="color:var(--gold-light);border-color:rgba(198,161,91,0.5)">Sophisticated</span>
+          <span class="about-tag" style="color:var(--gold-light);border-color:rgba(198,161,91,0.5)">Premium</span>
+        </div>
+      </div>
+    </div>
+    <div class="about-phase" id="ap1">
+      <div style="text-align:center;max-width:800px">
+        <span class="about-eyebrow" style="color:var(--gold)">What We Deliver</span>
+        <h2 class="about-headline" style="color:white">Every Moment.<br><em style="color:var(--gold);font-style:italic">Every You.</em></h2>
+        <p class="about-body" style="color:rgba(255,255,255,0.82)">We exist to help you look good for the night out, and stay safe when the night winds down. Two product lines. One unwavering standard of luxury.</p>
+        <div class="about-tags">
+          <span class="about-tag" style="color:var(--gold);border-color:rgba(198,161,91,0.4)">&nbsp;&#127912;&nbsp; Color That Cares</span>
+          <span class="about-tag" style="color:var(--gold);border-color:rgba(198,161,91,0.4)">&nbsp;&#128737;&nbsp; Protection You Feel</span>
+        </div>
+      </div>
+    </div>
+    <div class="phase-dots">
+      <div class="pdot active" id="pd0"></div>
+      <div class="pdot" id="pd1"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="prod-header rv">
+    <span class="sec-label">Our Collections</span>
+    <h2 class="sec-title">Premium Protection.<br><em>Vibrant Expression.</em></h2>
+    <p class="sec-sub">Two distinct lines, one unified philosophy &mdash; quality you feel, confidence you wear.</p>
+  </div>
+  <div class="ptabs">
+    <button class="ptab on" onclick="switchTab('cond',this)">Premium Condoms</button>
+    <button class="ptab" onclick="switchTab('hair',this)">Vibrant Color Cream</button>
+  </div>
+
+  <!-- CONDOMS -->
+  <div class="tcontent on" id="tc-cond">
+    <div class="carousel-section">
+      <div class="carousel-intro rv">
+        <span class="carousel-label">Feel Everything. Fear Nothing.</span>
+        <p class="carousel-sub">Engineered for those who demand closeness without compromise. Ultra-thin latex, finished with our signature silky lubricant for a natural, frictionless experience.</p>
+      </div>
+
+      <!-- VARIETY SELECTOR -->
+      <div class="variety-selector">
+        <button class="variety-btn active" onclick="selectVariety(0, this)" aria-label="Zero Thin">
+          <div class="variety-circle"><img src="images/image_003.png" alt="Zero Thin"></div>
+          <span class="variety-label">Zero Thin</span>
+        </button>
+        <button class="variety-btn" onclick="selectVariety(1, this)" aria-label="Extra Time PowerShot">
+          <div class="variety-circle"><img src="images/image_004.png" alt="Extra Time"></div>
+          <span class="variety-label">Extra Time</span>
+        </button>
+        <button class="variety-btn" onclick="selectVariety(2, this)" aria-label="Classic">
+          <div class="variety-circle"><img src="images/image_005.png" alt="Classic"></div>
+          <span class="variety-label">Classic</span>
+        </button>
+        <button class="variety-btn" onclick="selectVariety(3, this)" aria-label="Assorted Flavours">
+          <div class="variety-circle"><img src="images/image_006.png" alt="Assorted"></div>
+          <span class="variety-label">Assorted</span>
+        </button>
+        <button class="variety-btn" onclick="selectVariety(4, this)" aria-label="Super Studded">
+          <div class="variety-circle"><img src="images/image_007.png" alt="Super Studded"></div>
+          <span class="variety-label">Super Studded</span>
+        </button>
+      </div>
+
+      <div class="snap-track" id="cond-track">
+
+        <!-- 1: Zero Thin -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas" id="anim-zerothin">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:7%; --zt-size:70px; --zt-dur:3.2s; --zt-delay:0s; --zt-op:0.80; --zt-rise:-260px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:20%; --zt-size:58px; --zt-dur:2.8s; --zt-delay:0.6s; --zt-op:0.65; --zt-rise:-245px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:35%; --zt-size:82px; --zt-dur:3.5s; --zt-delay:1.2s; --zt-op:0.85; --zt-rise:-255px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:50%; --zt-size:62px; --zt-dur:2.7s; --zt-delay:0.3s; --zt-op:0.70; --zt-rise:-240px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:65%; --zt-size:76px; --zt-dur:3.1s; --zt-delay:1.0s; --zt-op:0.80; --zt-rise:-250px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:80%; --zt-size:54px; --zt-dur:2.9s; --zt-delay:1.7s; --zt-op:0.60; --zt-rise:-248px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:13%; --zt-size:66px; --zt-dur:3.4s; --zt-delay:2.0s; --zt-op:0.72; --zt-rise:-252px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:42%; --zt-size:80px; --zt-dur:3.6s; --zt-delay:0.8s; --zt-op:0.82; --zt-rise:-258px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:58%; --zt-size:56px; --zt-dur:2.6s; --zt-delay:2.3s; --zt-op:0.62; --zt-rise:-238px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:74%; --zt-size:68px; --zt-dur:3.0s; --zt-delay:1.4s; --zt-op:0.72; --zt-rise:-246px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:28%; --zt-size:60px; --zt-dur:2.8s; --zt-delay:2.6s; --zt-op:0.68; --zt-rise:-242px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:48%; --zt-size:86px; --zt-dur:3.7s; --zt-delay:0.4s; --zt-op:0.88; --zt-rise:-262px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:88%; --zt-size:58px; --zt-dur:3.2s; --zt-delay:1.8s; --zt-op:0.65; --zt-rise:-244px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:5%; --zt-size:72px; --zt-dur:3.3s; --zt-delay:3.0s; --zt-op:0.70; --zt-rise:-250px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:93%; --zt-size:50px; --zt-dur:3.1s; --zt-delay:0.7s; --zt-op:0.60; --zt-rise:-238px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:31%; --zt-size:74px; --zt-dur:3.8s; --zt-delay:1.5s; --zt-op:0.78; --zt-rise:-255px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:16%; --zt-size:46px; --zt-dur:2.5s; --zt-delay:2.9s; --zt-op:0.55; --zt-rise:-235px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:62%; --zt-size:90px; --zt-dur:4.0s; --zt-delay:0.2s; --zt-op:0.90; --zt-rise:-265px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:78%; --zt-size:52px; --zt-dur:2.9s; --zt-delay:2.1s; --zt-op:0.63; --zt-rise:-242px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:55%; --zt-size:64px; --zt-dur:3.3s; --zt-delay:3.4s; --zt-op:0.74; --zt-rise:-248px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-a.png" style="--zt-x:3%; --zt-size:44px; --zt-dur:2.7s; --zt-delay:1.1s; --zt-op:0.57; --zt-rise:-236px; --zt-scale:1;" alt="">
+              <img class="zt-icon" src="images/zt-icon-b.png" style="--zt-x:38%; --zt-size:78px; --zt-dur:3.9s; --zt-delay:2.7s; --zt-op:0.83; --zt-rise:-260px; --zt-scale:1;" alt="">
+            </div>
+            <img src="images/image_003.png" class="pcard-img" alt="Zero Thin">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">01 &nbsp;/&nbsp; 05 &mdash; Signature</span>
+            <div class="pcard-name">Zero Thin</div>
+            <p class="pcard-desc">Ultra-thin latex engineered for a barely-there skin-to-skin sensation. The closest thing to nothing &mdash; while still protecting everything. Finished with our silky lubricant for a frictionless, completely natural feel.</p>
+            <span class="pcard-tag">Signature</span>
+          </div>
+        </div>
+
+        <!-- 2: Extra Time PowerShot -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas" id="anim-powershot">
+              <canvas id="hourglass-canvas"></canvas>
+            </div>
+            <img src="images/image_004.png" class="pcard-img" alt="Extra Time PowerShot">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">02 &nbsp;/&nbsp; 05 &mdash; Performance</span>
+            <div class="pcard-name">Extra Time<br>PowerShot</div>
+            <p class="pcard-desc">Take control and redefine endurance. Performance-enhanced with a precision delay lubricant that gives you the edge when it matters most. Built for those who don't just perform &mdash; they dominate.</p>
+            <span class="pcard-tag">Performance</span>
+          </div>
+        </div>
+
+        <!-- 3: Classic -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas" id="anim-classic"></div>
+            <img src="images/image_005.png" class="pcard-img" alt="Classic">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">03 &nbsp;/&nbsp; 05 &mdash; Essential</span>
+            <div class="pcard-name">Classic</div>
+            <p class="pcard-desc">Smooth, comfortable and timelessly reliable. The essential choice for everyday confidence, redefined with VELVEX precision. Sometimes the most iconic statement is the one that never goes out of style.</p>
+            <span class="pcard-tag">Essential</span>
+          </div>
+        </div>
+
+        <!-- 4: Assorted Flavours -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas" id="anim-flavours"></div>
+            <img src="images/image_006.png" class="pcard-img" alt="Assorted Flavours">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">04 &nbsp;/&nbsp; 05 &mdash; Playful</span>
+            <div class="pcard-name">Assorted<br>Flavours</div>
+            <p class="pcard-desc">A playful, indulgent mix of delicious tastes and irresistible scents. From tropical to berry, every flavour is a new adventure. Add a flavorful twist to every intimate moment and let your senses lead the way.</p>
+            <span class="pcard-tag">Playful</span>
+          </div>
+        </div>
+
+        <!-- 5: Super Studded -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas" id="anim-studded">
+              <!-- ROW 1 — top, inward -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:18%;--stud-y:5%;--stud-size:52px;--stud-rot-start:-120deg;--stud-rot-end:-20deg;--stud-scale:0.95;--stud-dur:3.1s;--stud-delay:0.0s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:35%;--stud-y:4%;--stud-size:46px;--stud-rot-start:60deg;--stud-rot-end:180deg;--stud-scale:0.88;--stud-dur:2.8s;--stud-delay:0.5s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:52%;--stud-y:6%;--stud-size:54px;--stud-rot-start:-80deg;--stud-rot-end:40deg;--stud-scale:0.97;--stud-dur:3.3s;--stud-delay:1.0s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:68%;--stud-y:5%;--stud-size:44px;--stud-rot-start:140deg;--stud-rot-end:260deg;--stud-scale:0.85;--stud-dur:2.7s;--stud-delay:1.5s;" alt="">
+              <!-- ROW 2 -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:15%;--stud-y:18%;--stud-size:58px;--stud-rot-start:100deg;--stud-rot-end:220deg;--stud-scale:1.0;--stud-dur:3.0s;--stud-delay:0.2s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:30%;--stud-y:16%;--stud-size:48px;--stud-rot-start:-150deg;--stud-rot-end:-30deg;--stud-scale:0.90;--stud-dur:2.9s;--stud-delay:0.8s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:46%;--stud-y:19%;--stud-size:56px;--stud-rot-start:30deg;--stud-rot-end:150deg;--stud-scale:0.98;--stud-dur:3.4s;--stud-delay:1.3s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:62%;--stud-y:17%;--stud-size:50px;--stud-rot-start:-60deg;--stud-rot-end:60deg;--stud-scale:0.93;--stud-dur:3.1s;--stud-delay:0.4s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:76%;--stud-y:20%;--stud-size:44px;--stud-rot-start:160deg;--stud-rot-end:280deg;--stud-scale:0.87;--stud-dur:2.6s;--stud-delay:1.8s;" alt="">
+              <!-- ROW 3 -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:17%;--stud-y:32%;--stud-size:54px;--stud-rot-start:-100deg;--stud-rot-end:20deg;--stud-scale:0.96;--stud-dur:3.2s;--stud-delay:0.6s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:32%;--stud-y:34%;--stud-size:46px;--stud-rot-start:50deg;--stud-rot-end:170deg;--stud-scale:0.89;--stud-dur:2.8s;--stud-delay:1.2s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:50%;--stud-y:31%;--stud-size:60px;--stud-rot-start:-40deg;--stud-rot-end:80deg;--stud-scale:1.0;--stud-dur:3.5s;--stud-delay:0.1s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:66%;--stud-y:35%;--stud-size:48px;--stud-rot-start:120deg;--stud-rot-end:240deg;--stud-scale:0.91;--stud-dur:3.0s;--stud-delay:1.7s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:78%;--stud-y:33%;--stud-size:52px;--stud-rot-start:-80deg;--stud-rot-end:40deg;--stud-scale:0.94;--stud-dur:2.9s;--stud-delay:0.9s;" alt="">
+              <!-- ROW 4 -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:16%;--stud-y:47%;--stud-size:50px;--stud-rot-start:200deg;--stud-rot-end:320deg;--stud-scale:0.92;--stud-dur:3.1s;--stud-delay:2.1s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:34%;--stud-y:50%;--stud-size:56px;--stud-rot-start:-60deg;--stud-rot-end:60deg;--stud-scale:0.98;--stud-dur:2.7s;--stud-delay:0.3s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:52%;--stud-y:46%;--stud-size:44px;--stud-rot-start:80deg;--stud-rot-end:200deg;--stud-scale:0.86;--stud-dur:3.3s;--stud-delay:1.4s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:67%;--stud-y:49%;--stud-size:54px;--stud-rot-start:-130deg;--stud-rot-end:-10deg;--stud-scale:0.96;--stud-dur:2.8s;--stud-delay:0.7s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:79%;--stud-y:47%;--stud-size:46px;--stud-rot-start:40deg;--stud-rot-end:160deg;--stud-scale:0.89;--stud-dur:3.0s;--stud-delay:2.4s;" alt="">
+              <!-- ROW 5 -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:18%;--stud-y:62%;--stud-size:52px;--stud-rot-start:-90deg;--stud-rot-end:30deg;--stud-scale:0.94;--stud-dur:2.9s;--stud-delay:1.0s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:35%;--stud-y:64%;--stud-size:58px;--stud-rot-start:150deg;--stud-rot-end:270deg;--stud-scale:1.0;--stud-dur:3.4s;--stud-delay:0.4s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:52%;--stud-y:61%;--stud-size:46px;--stud-rot-start:-50deg;--stud-rot-end:70deg;--stud-scale:0.88;--stud-dur:3.1s;--stud-delay:1.9s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:68%;--stud-y:65%;--stud-size:54px;--stud-rot-start:110deg;--stud-rot-end:230deg;--stud-scale:0.97;--stud-dur:2.7s;--stud-delay:0.6s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:78%;--stud-y:63%;--stud-size:48px;--stud-rot-start:-160deg;--stud-rot-end:-40deg;--stud-scale:0.90;--stud-dur:3.2s;--stud-delay:1.3s;" alt="">
+              <!-- ROW 6 -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:20%;--stud-y:77%;--stud-size:50px;--stud-rot-start:70deg;--stud-rot-end:190deg;--stud-scale:0.93;--stud-dur:3.0s;--stud-delay:0.8s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:36%;--stud-y:79%;--stud-size:44px;--stud-rot-start:-110deg;--stud-rot-end:10deg;--stud-scale:0.86;--stud-dur:2.8s;--stud-delay:2.0s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:53%;--stud-y:76%;--stud-size:56px;--stud-rot-start:170deg;--stud-rot-end:290deg;--stud-scale:0.99;--stud-dur:3.3s;--stud-delay:0.2s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:68%;--stud-y:80%;--stud-size:46px;--stud-rot-start:-20deg;--stud-rot-end:100deg;--stud-scale:0.88;--stud-dur:2.9s;--stud-delay:1.6s;" alt="">
+              <!-- ROW 7 — bottom, inward -->
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:22%;--stud-y:89%;--stud-size:48px;--stud-rot-start:90deg;--stud-rot-end:210deg;--stud-scale:0.91;--stud-dur:2.7s;--stud-delay:1.1s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:40%;--stud-y:91%;--stud-size:54px;--stud-rot-start:-70deg;--stud-rot-end:50deg;--stud-scale:0.96;--stud-dur:3.2s;--stud-delay:0.5s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:57%;--stud-y:89%;--stud-size:44px;--stud-rot-start:130deg;--stud-rot-end:250deg;--stud-scale:0.87;--stud-dur:2.8s;--stud-delay:1.8s;" alt="">
+              <img class="stud-gem" src="images/stud-gem.png" style="--stud-x:72%;--stud-y:91%;--stud-size:50px;--stud-rot-start:-30deg;--stud-rot-end:90deg;--stud-scale:0.93;--stud-dur:3.0s;--stud-delay:0.9s;" alt="">
+            </div>
+            <img src="images/image_007.png" class="pcard-img" alt="Super Studded">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">05 &nbsp;/&nbsp; 05 &mdash; Intensity</span>
+            <div class="pcard-name">Super Studded</div>
+            <p class="pcard-desc">Strategically textured with precision-placed raised dots designed to intensify every point of contact. Amplify friction, heighten sensation, and turn every moment into an experience that reverberates long after.</p>
+            <span class="pcard-tag">Intensity</span>
+          </div>
+        </div>
+
+      </div><!-- /snap-track -->
+
+      <div class="carousel-nav">
+        <button class="cnav-btn" onclick="scrollCarousel('cond-track',-1)">&#8592;</button>
+        <div class="cnav-dots" id="cond-dots">
+          <button class="cnav-dot active" onclick="goToCard('cond-track',0)"></button>
+          <button class="cnav-dot" onclick="goToCard('cond-track',1)"></button>
+          <button class="cnav-dot" onclick="goToCard('cond-track',2)"></button>
+          <button class="cnav-dot" onclick="goToCard('cond-track',3)"></button>
+          <button class="cnav-dot" onclick="goToCard('cond-track',4)"></button>
+        </div>
+        <button class="cnav-btn" onclick="scrollCarousel('cond-track',1)">&#8594;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HAIR -->
+  <div class="tcontent" id="tc-hair">
+    <div class="carousel-section">
+      <div class="carousel-intro rv">
+        <span class="carousel-label">Wear Your Vibe. Feel the Velvet.</span>
+        <p class="carousel-sub">100% Vegan &nbsp;&middot;&nbsp; No Ammonia &nbsp;&middot;&nbsp; No Paraben &nbsp;&middot;&nbsp; Organic Herbs &nbsp;&middot;&nbsp; Velvet-Lock Technology</p>
+      </div>
+
+      <!-- HAIR COLOUR VARIETY SELECTOR -->
+      <div class="hair-variety-selector">
+        <button class="hair-variety-btn active" onclick="selectHairVariety(0,this)" aria-label="Natural Black">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-natural-black.png" alt="Natural Black" class="swatch-photo"></div>
+          <span class="hair-variety-label">Natural Black</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(1,this)" aria-label="Wine Red">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-wine-red.png" alt="Wine Red" class="swatch-photo"></div>
+          <span class="hair-variety-label">Wine Red</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(2,this)" aria-label="Light Brown">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-light-brown.png" alt="Light Brown" class="swatch-photo"></div>
+          <span class="hair-variety-label">Light Brown</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(3,this)" aria-label="Dark Blonde">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-dark-blonde.png" alt="Dark Blonde" class="swatch-photo"></div>
+          <span class="hair-variety-label">Dark Blonde</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(4,this)" aria-label="Caramel Brown">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-caramel-brown.png" alt="Caramel Brown" class="swatch-photo"></div>
+          <span class="hair-variety-label">Caramel Brown</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(5,this)" aria-label="Pink Pearl">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-pink-pearl.png" alt="Pink Pearl" class="swatch-photo"></div>
+          <span class="hair-variety-label">Pink Pearl</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(6,this)" aria-label="Ash Blonde">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-ash-blonde.png" alt="Ash Blonde" class="swatch-photo"></div>
+          <span class="hair-variety-label">Ash Blonde</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(7,this)" aria-label="Honey Glow">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-honey-glow.png" alt="Honey Glow" class="swatch-photo"></div>
+          <span class="hair-variety-label">Honey Glow</span>
+        </button>
+        <button class="hair-variety-btn" onclick="selectHairVariety(8,this)" aria-label="Glossy Beige">
+          <div class="hair-swatch-circle"><img src="images/hair-swatch-glossy-beige.png" alt="Glossy Beige" class="swatch-photo"></div>
+          <span class="hair-variety-label">Glossy Beige</span>
+        </button>
+      </div>
+
+      <div class="snap-track" id="hair-track">
+
+        <!-- H1: Natural Black -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="10,5,15"></canvas></div>
+            <img src="images/image_008.png" class="pcard-img" alt="Natural Black">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">01 &nbsp;/&nbsp; 09 &mdash; Shade 01</span>
+            <div class="pcard-name">Natural Black</div>
+            <p class="pcard-desc">Deep, rich and timelessly commanding. Natural Black delivers a flawless, mirror-finish tone that anchors any look with effortless authority. Perfect for those who speak volumes without saying a word.</p>
+            <span class="pcard-tag">Rich &middot; Deep &middot; Timeless</span>
+          </div>
+        </div>
+
+        <!-- H2: Wine Red -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="160,20,45"></canvas></div>
+            <img src="images/image_009.png" class="pcard-img" alt="Wine Red">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">02 &nbsp;/&nbsp; 09 &mdash; Shade 4.64</span>
+            <div class="pcard-name">Wine Red</div>
+            <p class="pcard-desc">Bold, passionate and undeniably sultry. Wine Red is the colour of confidence &mdash; the shade you wear when you want the room to turn. Deep burgundy undertones that stay vivid for weeks with Velvet-Lock Technology.</p>
+            <span class="pcard-tag">Bold &middot; Passionate &middot; Sultry</span>
+          </div>
+        </div>
+
+        <!-- H3: Light Brown -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="140,95,50"></canvas></div>
+            <img src="images/image_010.png" class="pcard-img" alt="Light Brown">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">03 &nbsp;/&nbsp; 09 &mdash; Shade 03</span>
+            <div class="pcard-name">Light Brown</div>
+            <p class="pcard-desc">Warm, natural and effortlessly wearable. Light Brown is your every-day elegance &mdash; a tone that complements every skin and every season. Soft chestnut warmth with a luminous finish that catches the light beautifully.</p>
+            <span class="pcard-tag">Warm &middot; Natural &middot; Effortless</span>
+          </div>
+        </div>
+
+        <!-- H4: Dark Blonde -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="200,170,60"></canvas></div>
+            <img src="images/image_011.png" class="pcard-img" alt="Dark Blonde">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">04 &nbsp;/&nbsp; 09 &mdash; Shade 6.1</span>
+            <div class="pcard-name">Dark Blonde</div>
+            <p class="pcard-desc">Sun-kissed, radiant and effortlessly chic. Dark Blonde brings the warmth of golden hour to your hair year-round. A versatile tone that flatters every complexion and transitions beautifully from day to night.</p>
+            <span class="pcard-tag">Sun-Kissed &middot; Radiant &middot; Chic</span>
+          </div>
+        </div>
+
+        <!-- H5: Caramel Brown -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="190,130,35"></canvas></div>
+            <img src="images/image_012.png" class="pcard-img" alt="Caramel Brown">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">05 &nbsp;/&nbsp; 09 &mdash; Shade 7.7</span>
+            <div class="pcard-name">Caramel Brown</div>
+            <p class="pcard-desc">Golden, sweet and undeniably luxurious. Caramel Brown wraps your hair in rich amber warmth &mdash; a multidimensional tone that glows like spun silk. The definition of opulent, sun-drenched beauty.</p>
+            <span class="pcard-tag">Golden &middot; Sweet &middot; Luxurious</span>
+          </div>
+        </div>
+
+        <!-- H6: Pink Pearl -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="230,140,180"></canvas></div>
+            <img src="images/image_013.png" class="pcard-img" alt="Pink Pearl">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">06 &nbsp;/&nbsp; 09 &mdash; Shade 9.2P</span>
+            <div class="pcard-name">Pink Pearl</div>
+            <p class="pcard-desc">Dreamy, feminine and daringly unforgettable. Pink Pearl is for the bold at heart &mdash; a soft rose-blush tone with a pearlescent shimmer that transforms every strand into an art statement. Be the look.</p>
+            <span class="pcard-tag">Dreamy &middot; Feminine &middot; Daring</span>
+          </div>
+        </div>
+
+        <!-- H7: Ash Blonde -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="185,190,205"></canvas></div>
+            <img src="images/image_014.png" class="pcard-img" alt="Ash Blonde">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">07 &nbsp;/&nbsp; 09 &mdash; Shade 9.1</span>
+            <div class="pcard-name">Ash Blonde</div>
+            <p class="pcard-desc">Cool, sophisticated and unmistakably modern. Ash Blonde channels editorial elegance with its cool-toned, silvery-blonde finish. The shade of runways and rooftops &mdash; sharp, polished, and always ahead of the moment.</p>
+            <span class="pcard-tag">Cool &middot; Sophisticated &middot; Modern</span>
+          </div>
+        </div>
+
+        <!-- H8: Honey Glow -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="220,160,40"></canvas></div>
+            <img src="images/image_015.png" class="pcard-img" alt="Honey Glow">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">08 &nbsp;/&nbsp; 09 &mdash; Shade 9.3H</span>
+            <div class="pcard-name">Honey Glow</div>
+            <p class="pcard-desc">Amber, vibrant and radiantly alive. Honey Glow captures the warmth of liquid gold with a luminous depth that glows from within. A shade that feels like sunlight &mdash; warm, inviting, and impossible to ignore.</p>
+            <span class="pcard-tag">Amber &middot; Vibrant &middot; Glowing</span>
+          </div>
+        </div>
+
+        <!-- H9: Glossy Beige -->
+        <div class="pcard">
+          <div class="pcard-img-side">
+            <div class="anim-canvas"><canvas class="hair-ink-canvas" data-col="215,198,172"></canvas></div>
+            <img src="images/image_016.png" class="pcard-img" alt="Glossy Beige">
+          </div>
+          <div class="pcard-content">
+            <span class="pcard-num">09 &nbsp;/&nbsp; 09 &mdash; Shade 10.21B</span>
+            <div class="pcard-name">Glossy Beige</div>
+            <p class="pcard-desc">Luminous, elegant and refreshingly refined. Glossy Beige is the ultimate in understated luxury &mdash; an ultra-light, pearl-infused tone that catches every light source and radiates quiet sophistication from every angle.</p>
+            <span class="pcard-tag">Luminous &middot; Elegant &middot; Fresh</span>
+          </div>
+        </div>
+
+      </div><!-- /snap-track -->
+
+      <div class="carousel-nav">
+        <button class="cnav-btn" onclick="scrollCarousel('hair-track',-1)">&#8592;</button>
+        <div class="cnav-dots" id="hair-dots">
+          <button class="cnav-dot active" onclick="goToCard('hair-track',0)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',1)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',2)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',3)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',4)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',5)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',6)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',7)"></button>
+          <button class="cnav-dot" onclick="goToCard('hair-track',8)"></button>
+        </div>
+        <button class="cnav-btn" onclick="scrollCarousel('hair-track',1)">&#8594;</button>
+      </div>
+
+      <div class="hbadges rv" style="margin-top:60px">
+        <div class="hbadge"><div class="hbadge-icon">&#127807;</div><span>100% Vegan</span></div>
+        <div class="hbadge"><div class="hbadge-icon">&#10024;</div><span>Velvet-Lock Tech</span></div>
+        <div class="hbadge"><div class="hbadge-icon">&#128683;</div><span>No Ammonia</span></div>
+        <div class="hbadge"><div class="hbadge-icon">&#127807;</div><span>Organic Herbs</span></div>
+        <div class="hbadge"><div class="hbadge-icon">&#128167;</div><span>No Paraben</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cont-inner">
+    <div class="rv">
+      <span class="sec-label" style="color:var(--gold-light)">Let's Connect</span>
+      <h2 class="cont-title">Find Us<br>in Dubai.</h2>
+      <p class="cont-sub">We're always here to help you live vibrant, bold, and smart. Reach out through any of the channels below.</p>
+      <img src="images/image_017.png" alt="VELVEX" class="cont-logo">
+    </div>
+    <div class="cont-details rv d2">
+      <div class="cont-item">
+        <div class="cont-icon">&#128205;</div>
+        <div><span class="cont-lbl">Address</span><div class="cont-val">Dubai, UAE</div></div>
+      </div>
+      <div class="cont-item">
+        <div class="cont-icon">&#9993;</div>
+        <div><span class="cont-lbl">Email</span><div class="cont-val">info@velvex.ae</div></div>
+      </div>
+      <div class="cont-item">
+        <div class="cont-icon">&#128222;</div>
+        <div><span class="cont-lbl">Call</span><div class="cont-val">+971 50 123 4567</div></div>
+      </div>
+      <div class="cont-item">
+        <div class="cont-icon">&#127760;</div>
+        <div>
+          <span class="cont-lbl">Connect</span>
+          <div class="socials">
+            <a href="#" class="sbtn">f</a>
+            <a href="#" class="sbtn">in</a>
+            <a href="#" class="sbtn">&#9654;</a>
+            <a href="#" class="sbtn">&#9835;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="fcopy">&copy; 2026 VELVEX. All Rights Reserved.</span>
+  <span class="ftag">Live Vibrant. Bold. Smart.</span>
+  <span class="fcopy">Velvex.ae</span>
+</footer>
+
+<script>
+// CURSOR
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.style.left = mx+'px'; cur.style.top = my+'px';
+});
+(function animRing(){
+  rx += (mx-rx)*0.11; ry += (my-ry)*0.11;
+  ring.style.left = rx+'px'; ring.style.top = ry+'px';
+  requestAnimationFrame(animRing);
+})();
+document.querySelectorAll('a,button,.ccard,.hcard,.pcard').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+});
+
+// NAV
+const nav = document.getElementById('navbar');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>60));
+
+// ABOUT SCROLL
+const aboutSec = document.getElementById('about');
+let curPhase = 0;
+const bgClasses = ['p0','p1','p2'];
+function setPhase(p){
+  if(p===curPhase) return;
+  curPhase = p;
+  const abg = document.getElementById('abg');
+  abg.className = 'about-bg ' + bgClasses[p];
+  [0,1].forEach(i=>{
+    document.getElementById('ap'+i).classList.toggle('active', i===p);
+    document.getElementById('pd'+i).classList.toggle('active', i===p);
+  });
+}
+window.addEventListener('scroll',()=>{
+  const rect = aboutSec.getBoundingClientRect();
+  const total = aboutSec.offsetHeight - window.innerHeight;
+  const scrolled = -rect.top;
+  const prog = Math.max(0,Math.min(1,scrolled/total));
+  setPhase(Math.min(1,Math.floor(prog*2)));
+});
+
+// SCROLL REVEAL
+const rvEls = document.querySelectorAll('.rv');
+const rvObs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:0.12});
+rvEls.forEach(el=>rvObs.observe(el));
+
+// TABS
+function switchTab(id, btn){
+  document.querySelectorAll('.tcontent').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  document.getElementById('tc-'+id).classList.add('on');
+  btn.classList.add('on');
+  document.querySelectorAll('#tc-'+id+' .rv').forEach(el=>{
+    el.classList.remove('in');
+    setTimeout(()=>rvObs.observe(el),50);
+  });
+}
+
+// SMOOTH SCROLL
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    e.preventDefault();
+    const t = document.querySelector(a.getAttribute('href'));
+    if(t) t.scrollIntoView({behavior:'smooth'});
+  });
+});
+
+// ── VARIETY SELECTOR ──
+function selectVariety(idx, btn) {
+  // Update active state on buttons
+  document.querySelectorAll('.variety-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Scroll carousel to that card
+  goToCard('cond-track', idx);
+}
+
+// Sync variety selector when carousel scrolls
+(function() {
+  const track = document.getElementById('cond-track');
+  if (!track) return;
+  track.addEventListener('scroll', () => {
+    const w = getCardWidth('cond-track');
+    const idx = Math.round(track.scrollLeft / w);
+    document.querySelectorAll('.variety-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  }, { passive: true });
+})();
+
+// ── HAIR VARIETY SELECTOR ──
+function selectHairVariety(idx, btn) {
+  document.querySelectorAll('.hair-variety-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  goToCard('hair-track', idx);
+}
+
+// Sync hair variety selector when carousel scrolls
+(function() {
+  const track = document.getElementById('hair-track');
+  if (!track) return;
+  track.addEventListener('scroll', () => {
+    const w = getCardWidth('hair-track');
+    const idx = Math.round(track.scrollLeft / w);
+    document.querySelectorAll('.hair-variety-btn').forEach((b, i) => b.classList.toggle('active', i === idx));
+  }, { passive: true });
+})();
+
+// ── CAROUSEL ──
+function getCardWidth(trackId) {
+  const track = document.getElementById(trackId);
+  const card = track.querySelector('.pcard');
+  if (!card) return 984;
+  return card.offsetWidth + 24; // card + gap
+}
+
+function scrollCarousel(trackId, dir) {
+  const track = document.getElementById(trackId);
+  const w = getCardWidth(trackId);
+  track.scrollBy({ left: dir * w, behavior: 'smooth' });
+}
+
+function goToCard(trackId, idx) {
+  const track = document.getElementById(trackId);
+  const w = getCardWidth(trackId);
+  track.scrollTo({ left: idx * w, behavior: 'smooth' });
+}
+
+// Dot sync on scroll
+function setupDots(trackId, dotsId) {
+  const track = document.getElementById(trackId);
+  const dotsEl = document.getElementById(dotsId);
+  if (!track || !dotsEl) return;
+  const dots = dotsEl.querySelectorAll('.cnav-dot');
+  track.addEventListener('scroll', () => {
+    const w = getCardWidth(trackId);
+    const idx = Math.round(track.scrollLeft / w);
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+  }, { passive: true });
+}
+setupDots('cond-track', 'cond-dots');
+setupDots('hair-track', 'hair-dots');
+
+// ── HOVER ANIMATIONS ──
+
+// Zero Thin: ripple rings — pure CSS via .anim-canvas visibility, nothing extra needed
+
+// Extra Time: canvas-drawn hourglass with falling sand particles
+(function initHourglass(){
+  const canvas = document.getElementById('hourglass-canvas');
+  if (!canvas) return;
+  const parent = canvas.parentElement;
+
+  function resize() {
+    canvas.width  = parent.offsetWidth;
+    canvas.height = parent.offsetHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const ctx = canvas.getContext('2d');
+
+  // ── Hourglass geometry (relative to canvas centre) ──
+  // We compute everything relative so it scales with the card.
+  const CYCLE = 7000; // ms per full drain → flip
+
+  // Sand particles
+  const PARTICLE_COUNT = 180;
+  const particles = [];
+
+  function hgGeom() {
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+    const hw = Math.min(W, H) * 0.30;  // half-width of glass top
+    const hh = Math.min(W, H) * 0.36;  // half-height of glass
+
+    const topTL  = { x: cx - hw, y: cy - hh };
+    const topTR  = { x: cx + hw, y: cy - hh };
+    const neck   = { x: cx,      y: cy };
+    const neckW  = 5;
+    const botBL  = { x: cx - hw, y: cy + hh };
+    const botBR  = { x: cx + hw, y: cy + hh };
+    const capH   = 12;
+
+    return { cx, cy, hw, hh, topTL, topTR, neck, neckW, botBL, botBR, capH, W, H };
+  }
+
+  // Particle class
+  class SandParticle {
+    constructor(g, progress) {
+      this.reset(g, progress, true);
+    }
+    reset(g, progress, init) {
+      // progress 0→1: how far through the drain cycle we are
+      // Top chamber holds particles, they fall through neck to bottom
+      const sandFraction = 1 - progress; // how much sand is still on top
+
+      // Decide if particle should be in top or bottom chamber
+      if (Math.random() < sandFraction || init) {
+        // top chamber — random position within triangle
+        const ty = g.topTL.y + Math.random() * (g.hh * sandFraction * 1.8);
+        const halfW = (g.hh - (ty - g.topTL.y)) / g.hh * g.hw;
+        this.x = g.cx + (Math.random() * 2 - 1) * halfW * 0.88;
+        this.y = ty;
+        this.inTop = true;
+        this.vx = (Math.random() - 0.5) * 0.3;
+        this.vy = 0;
+        this.falling = false;
+      } else {
+        // bottom chamber
+        const fillH = g.hh * progress * 1.8;
+        const by = g.cy + g.hh - Math.random() * fillH;
+        const halfW = (by - g.cy) / g.hh * g.hw;
+        this.x = g.cx + (Math.random() * 2 - 1) * halfW * 0.88;
+        this.y = by;
+        this.inTop = false;
+        this.vx = 0;
+        this.vy = 0;
+        this.falling = false;
+      }
+      this.size   = 1.2 + Math.random() * 2.2;
+      this.alpha  = 0.6 + Math.random() * 0.4;
+      const t = Math.random();
+      this.color  = `rgba(${Math.round(198+t*57)},${Math.round(161+t*50)},${Math.round(91+t*30)},${this.alpha})`;
+    }
+  }
+
+  // init particles
+  let g = hgGeom();
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    particles.push(new SandParticle(g, i / PARTICLE_COUNT));
+  }
+
+  // Stream particles — tiny dots actively falling through neck
+  const STREAM_COUNT = 22;
+  const streamParts = Array.from({length: STREAM_COUNT}, (_, i) => ({
+    y: 0,
+    speed: 2.2 + Math.random() * 2.8,
+    delay: Math.random() * 600,
+    size: 1 + Math.random() * 1.5,
+    alpha: 0.7 + Math.random() * 0.3,
+  }));
+
+  let startTime = performance.now();
+  let flipping  = false;
+  let flipStart = 0;
+  let flipAngle = 0;
+
+  function draw(now) {
+    requestAnimationFrame(draw);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    g = hgGeom();
+
+    const elapsed  = (now - startTime) % CYCLE;
+    const progress = elapsed / CYCLE; // 0 → 1 over CYCLE ms
+
+    // Flip transition at end of cycle
+    const flipZone = 0.88; // when flipping starts
+    if (progress > flipZone && !flipping) {
+      flipping  = true;
+      flipStart = now;
+    }
+    if (progress < 0.05 && flipping) {
+      flipping = false;
+      // re-seed particles for fresh drain
+      particles.forEach((p, i) => p.reset(g, 0, true));
+    }
+    const flipProgress = flipping ? Math.min(1, (now - flipStart) / (CYCLE * (1 - flipZone))) : 0;
+    flipAngle = flipping ? flipProgress * Math.PI : 0;
+
+    // ── Draw with rotation transform for flip ──
+    ctx.save();
+    ctx.translate(g.cx, g.cy);
+    ctx.rotate(flipAngle);
+    ctx.translate(-g.cx, -g.cy);
+
+    const { cx, cy, hw, hh, topTL, topTR, botBL, botBR, capH } = g;
+
+    // ── Glass body ──
+    const goldGrad = ctx.createLinearGradient(cx - hw, cy - hh, cx + hw, cy + hh);
+    goldGrad.addColorStop(0,   'rgba(230,210,162,0.95)');
+    goldGrad.addColorStop(0.5, 'rgba(198,161,91,0.95)');
+    goldGrad.addColorStop(1,   'rgba(154,122,62,0.95)');
+
+    // Glass glow
+    const glowPulse = 0.18 + 0.12 * Math.sin(now * 0.002);
+    ctx.shadowColor = `rgba(198,161,91,${glowPulse + 0.2})`;
+    ctx.shadowBlur  = 28 + 14 * Math.sin(now * 0.0015);
+
+    // Top triangle outline
+    ctx.beginPath();
+    ctx.moveTo(cx - hw, cy - hh);
+    ctx.lineTo(cx + hw, cy - hh);
+    ctx.lineTo(cx + g.neckW, cy);
+    ctx.lineTo(cx - g.neckW, cy);
+    ctx.closePath();
+    ctx.strokeStyle = goldGrad;
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+
+    // Bottom triangle outline
+    ctx.beginPath();
+    ctx.moveTo(cx - g.neckW, cy);
+    ctx.lineTo(cx + g.neckW, cy);
+    ctx.lineTo(cx + hw, cy + hh);
+    ctx.lineTo(cx - hw, cy + hh);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Glass surface sheen (inner highlight)
+    const sheen = ctx.createLinearGradient(cx - hw + 10, cy - hh, cx - hw + 40, cy);
+    sheen.addColorStop(0,   'rgba(255,255,255,0.18)');
+    sheen.addColorStop(1,   'rgba(255,255,255,0)');
+    ctx.fillStyle   = sheen;
+    ctx.shadowBlur  = 0;
+    ctx.beginPath();
+    ctx.moveTo(cx - hw + 6, cy - hh + 6);
+    ctx.lineTo(cx - hw + 36, cy - hh + 6);
+    ctx.lineTo(cx - g.neckW + 4, cy - 6);
+    ctx.lineTo(cx - g.neckW, cy - 6);
+    ctx.closePath();
+    ctx.fill();
+
+    // Top cap
+    ctx.shadowColor = `rgba(198,161,91,0.5)`;
+    ctx.shadowBlur  = 12;
+    const capRad = 6;
+    ctx.beginPath();
+    ctx.roundRect(cx - hw - 6, cy - hh - capH, hw * 2 + 12, capH, capRad);
+    ctx.fillStyle = goldGrad;
+    ctx.fill();
+
+    // Bottom cap
+    ctx.beginPath();
+    ctx.roundRect(cx - hw - 6, cy + hh, hw * 2 + 12, capH, capRad);
+    ctx.fill();
+
+    ctx.shadowBlur = 0;
+
+    // ── Sand in top chamber ──
+    const sandFraction = Math.max(0, 1 - (flipping ? 1 : progress / flipZone));
+    if (sandFraction > 0.01) {
+      ctx.save();
+      // Clip to top triangle
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, cy - hh);
+      ctx.lineTo(cx + hw, cy - hh);
+      ctx.lineTo(cx + g.neckW, cy);
+      ctx.lineTo(cx - g.neckW, cy);
+      ctx.closePath();
+      ctx.clip();
+
+      // Sand fill gradient
+      const sandTop  = cy - hh + 4;
+      const sandBot  = cy - hh + (hh - 4) * 2 * sandFraction;
+      const sg = ctx.createLinearGradient(cx, sandTop, cx, sandBot);
+      sg.addColorStop(0,   'rgba(255,224,130,0.95)');
+      sg.addColorStop(0.5, 'rgba(220,175,90,0.92)');
+      sg.addColorStop(1,   'rgba(185,140,65,0.88)');
+      ctx.fillStyle = sg;
+      // Fill from bottom of chamber up
+      ctx.fillRect(cx - hw, sandBot - (sandBot - sandTop), hw * 2, sandBot - sandTop + 2);
+
+      // Sand surface ripple
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, sandBot);
+      for (let xi = -hw; xi <= hw; xi += 8) {
+        ctx.lineTo(cx + xi, sandBot + Math.sin((xi * 0.18) + now * 0.003) * 2.5);
+      }
+      ctx.lineTo(cx + hw, sandBot);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,235,160,0.45)';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // ── Sand in bottom chamber ──
+    const botFraction = flipping ? 1 : progress / flipZone;
+    if (botFraction > 0.01) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(cx - g.neckW, cy);
+      ctx.lineTo(cx + g.neckW, cy);
+      ctx.lineTo(cx + hw, cy + hh);
+      ctx.lineTo(cx - hw, cy + hh);
+      ctx.closePath();
+      ctx.clip();
+
+      const fillH  = (hh - 4) * 2 * botFraction;
+      const fillTop = cy + hh - fillH;
+      const bg = ctx.createLinearGradient(cx, fillTop, cx, cy + hh);
+      bg.addColorStop(0,   'rgba(255,224,130,0.9)');
+      bg.addColorStop(0.6, 'rgba(210,165,75,0.93)');
+      bg.addColorStop(1,   'rgba(175,130,55,0.88)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(cx - hw, fillTop, hw * 2, fillH + 2);
+
+      // surface ripple
+      ctx.beginPath();
+      ctx.moveTo(cx - hw, fillTop);
+      for (let xi = -hw; xi <= hw; xi += 8) {
+        ctx.lineTo(cx + xi, fillTop + Math.sin((xi * 0.2) + now * 0.0035) * 2.2);
+      }
+      ctx.lineTo(cx + hw, fillTop);
+      ctx.closePath();
+      ctx.fillStyle = 'rgba(255,245,180,0.4)';
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    // ── Falling sand stream ──
+    if (!flipping && progress < flipZone) {
+      streamParts.forEach((sp, i) => {
+        const t = ((now - sp.delay) % 900) / 900;
+        const sy = cy + t * hh * 0.92;
+        const wobble = Math.sin(t * 9 + i) * 1.4;
+        ctx.beginPath();
+        ctx.arc(cx + wobble, sy, sp.size, 0, Math.PI * 2);
+        const alpha = sp.alpha * (1 - Math.pow(t, 2));
+        const bright = Math.round(200 + Math.random() * 55);
+        ctx.fillStyle = `rgba(${bright},${Math.round(bright*0.8)},${Math.round(bright*0.42)},${alpha})`;
+        ctx.fill();
+
+        // tiny glow on stream
+        if (i % 3 === 0) {
+          ctx.beginPath();
+          ctx.arc(cx + wobble, sy, sp.size + 2, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(255,220,100,0.12)`;
+          ctx.fill();
+        }
+      });
+
+      // Neck pinch glow
+      const ng = ctx.createRadialGradient(cx, cy, 0, cx, cy, 14);
+      ng.addColorStop(0,   `rgba(255,210,80,${0.22 + 0.1 * Math.sin(now * 0.005)})`);
+      ng.addColorStop(1,   'rgba(255,210,80,0)');
+      ctx.fillStyle = ng;
+      ctx.beginPath();
+      ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // ── Sand particles (fine grains scattered in chambers) ──
+    if (!flipping) {
+      particles.forEach(p => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size * 0.6, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+    }
+
+    // ── Shimmer sparkles on glass surface ──
+    const sparkCount = 5;
+    for (let i = 0; i < sparkCount; i++) {
+      const phase = (now * 0.0008 + i * 0.63) % 1;
+      const sx = cx - hw + 12 + (hw * 2 - 24) * (i / sparkCount);
+      const sy_t = cy - hh + 8 + phase * (hh * 0.9);
+      const sa = Math.sin(phase * Math.PI) * 0.6;
+      ctx.beginPath();
+      ctx.arc(sx, sy_t, 1.8, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,245,200,${sa})`;
+      ctx.fill();
+    }
+
+    ctx.restore(); // end flip transform
+  }
+
+  requestAnimationFrame(draw);
+})();
+
+(function buildFpHearts(){
+  const canvas = document.getElementById('anim-classic');
+  if (!canvas) return;
+  // Spread hearts across the full card in a loose grid, avoiding dead centre (occupied by product image)
+  const positions = [
+    // x%  y%   size  rot      opacity  dur   delay
+    [10,   8,   110,  -18,     0.72,    2.6,  0.0 ],
+    [60,   6,   90,    12,     0.65,    2.9,  0.5 ],
+    [82,  12,   100,  -8,      0.70,    2.7,  1.1 ],
+    [5,   38,   95,    22,     0.68,    3.0,  0.3 ],
+    [78,  40,   105,  -14,     0.73,    2.8,  1.6 ],
+    [18,  68,   100,   16,     0.67,    2.6,  0.8 ],
+    [62,  65,   90,   -20,     0.71,    3.1,  1.9 ],
+    [88,  70,   95,    8,      0.66,    2.7,  0.2 ],
+    [35,  85,   105,  -10,     0.69,    2.9,  1.4 ],
+    [72,  88,   88,    18,     0.64,    2.6,  2.2 ],
+    [5,   90,   92,   -24,     0.68,    3.0,  0.7 ],
+    [88,  88,   98,    6,      0.70,    2.8,  1.0 ],
+  ];
+  positions.forEach(([lp, tp, sz, rot, op, dur, delay]) => {
+    const img = document.createElement('img');
+    img.className = 'fp-heart';
+    img.src = 'images/classic-heart.png';
+    img.alt = '';
+    img.style.cssText = `
+      --fp-x:${lp}%;
+      --fp-y:${tp}%;
+      --fp-size:${sz}px;
+      --fp-rot:${rot}deg;
+      --fp-op:${op};
+      --fp-scale:${0.75 + Math.random()*0.2};
+      --fp-dur:${dur}s;
+      --fp-delay:${delay}s;
+    `;
+    canvas.appendChild(img);
+  });
+})();
+
+// Assorted Flavours — fruit arc + juice splash (CSS-driven)
+
+// Hair Ink Drop — blooming dye-in-water canvas animation
+(function initHairInk(){
+  document.querySelectorAll('canvas.hair-ink-canvas').forEach(canvas => {
+    const parent = canvas.parentElement;
+    const colStr = canvas.dataset.col || '198,161,91';
+    const [r,g,b] = colStr.split(',').map(Number);
+
+    function resize() {
+      const w = parent.offsetWidth;
+      const h = parent.offsetHeight;
+      if (w > 0 && h > 0) {
+        canvas.width  = w;
+        canvas.height = h;
+        drops && drops.forEach(d => d.reset());
+      }
+    }
+
+    // ResizeObserver catches the moment the canvas becomes visible (tab switch)
+    const ro = new ResizeObserver(() => resize());
+    ro.observe(parent);
+    resize();
+
+    const ctx = canvas.getContext('2d');
+    let drops;
+
+    class InkDrop {
+      constructor(delay) {
+        this.delay = delay;
+        this.reset();
+        this.age = delay;
+      }
+      reset() {
+        const W = canvas.width, H = canvas.height;
+        this.x = W * (0.2 + Math.random() * 0.6);
+        this.y = H * (0.2 + Math.random() * 0.6);
+        this.age = 0;
+        this.life = 180 + Math.random() * 80;
+        this.maxR = 90 + Math.random() * 60;
+        this.rings = Array.from({length: 5}, (_, i) => ({
+          phase: i / 5,
+          speed: 0.6 + Math.random() * 0.4,
+          opacity: 0.38 + Math.random() * 0.25,
+        }));
+        this.tendrils = Array.from({length: 10 + Math.floor(Math.random()*6)}, () => ({
+          angle: Math.random() * Math.PI * 2,
+          length: 0.7 + Math.random() * 0.6,
+          width: 2.5 + Math.random() * 3.5,
+          speed: 0.7 + Math.random() * 0.6,
+        }));
+      }
+      draw(ctx) {
+        this.age++;
+        if (this.age < 0) return;
+        if (this.age > this.life) { this.reset(); return; }
+
+        const prog = this.age / this.life;
+        const fadeIn  = Math.min(1, prog * 5);
+        const fadeOut = prog > 0.7 ? 1 - (prog - 0.7) / 0.3 : 1;
+        const alpha   = fadeIn * fadeOut;
+        if (alpha <= 0) return;
+
+        const curR = this.maxR * Math.min(1, prog * 2.5);
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.globalCompositeOperation = 'screen';
+
+        // core bloom
+        const cg = ctx.createRadialGradient(0, 0, 0, 0, 0, curR * 0.65);
+        cg.addColorStop(0,   `rgba(${Math.min(255,r+100)},${Math.min(255,g+90)},${Math.min(255,b+80)},${alpha * 0.85})`);
+        cg.addColorStop(0.4, `rgba(${Math.min(255,r+50)},${Math.min(255,g+40)},${Math.min(255,b+30)},${alpha * 0.65})`);
+        cg.addColorStop(0.8, `rgba(${r},${g},${b},${alpha * 0.40})`);
+        cg.addColorStop(1,   `rgba(${r},${g},${b},0)`);
+        ctx.beginPath();
+        ctx.arc(0, 0, curR * 0.65, 0, Math.PI * 2);
+        ctx.fillStyle = cg;
+        ctx.fill();
+
+        // expanding rings
+        this.rings.forEach(ring => {
+          const rProg = Math.min(1, (prog + ring.phase * 0.3) * ring.speed * 1.8);
+          if (rProg <= 0) return;
+          const rFade = rProg > 0.6 ? 1 - (rProg - 0.6) / 0.4 : rProg / 0.3;
+          const rAlpha = ring.opacity * rFade * fadeIn;
+          if (rAlpha <= 0) return;
+          const rr = curR * (0.3 + rProg * 0.9);
+          ctx.beginPath();
+          ctx.arc(0, 0, rr, 0, Math.PI * 2);
+          ctx.strokeStyle = `rgba(${Math.min(255,r+80)},${Math.min(255,g+70)},${Math.min(255,b+50)},${rAlpha})`;
+          ctx.lineWidth = 2.0;
+          ctx.stroke();
+        });
+
+        // ink tendrils
+        this.tendrils.forEach(t => {
+          const tProg = Math.min(1, prog * t.speed * 2.2);
+          if (tProg <= 0) return;
+          const tLen = curR * t.length * tProg;
+          const tAlpha = alpha * 0.70 * (1 - tProg * 0.4);
+          if (tAlpha <= 0) return;
+          const ex = Math.cos(t.angle) * tLen;
+          const ey = Math.sin(t.angle) * tLen;
+          const grad = ctx.createLinearGradient(0, 0, ex, ey);
+          grad.addColorStop(0, `rgba(${r},${g},${b},${tAlpha})`);
+          grad.addColorStop(1, `rgba(${r},${g},${b},0)`);
+          ctx.beginPath();
+          ctx.moveTo(0, 0);
+          ctx.quadraticCurveTo(
+            Math.cos(t.angle + 0.3) * tLen * 0.5,
+            Math.sin(t.angle + 0.3) * tLen * 0.5,
+            ex, ey
+          );
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = t.width * (1 - tProg * 0.6);
+          ctx.lineCap = 'round';
+          ctx.stroke();
+        });
+
+        ctx.restore();
+      }
+    }
+
+    // 6 drops staggered so there's always activity
+    drops = [
+      new InkDrop(0),
+      new InkDrop(55),
+      new InkDrop(105),
+      new InkDrop(155),
+      new InkDrop(205),
+      new InkDrop(255),
+    ];
+
+    function loop() {
+      requestAnimationFrame(loop);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      drops.forEach(d => d.draw(ctx));
+    }
+    loop();
+  });
+})();
+
+// Super Studded: stud gem images — handled via HTML + CSS animation
+</script>
+</body>
+</html>
